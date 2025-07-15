@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW p_phone_inc AS SELECT phone_inc.pinc_id AS pinc_id, phone_inc.description AS description, phone_inc.ttime AS ttime, phone_inc.taxid AS taxid, phone_inc.inc_type AS inc_type, phone_inc.specific_field3 AS specific_field3 FROM phone_inc;
+
