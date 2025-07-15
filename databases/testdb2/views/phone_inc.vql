@@ -1,0 +1,40 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC phone_inc
+    DATASOURCENAME=ds_sql_server_copy
+    CATALOGNAME='${databases.testdb2.views.jdbc.phone_inc.CATALOGNAME}' 
+    SCHEMANAME='${databases.testdb2.views.jdbc.phone_inc.SCHEMANAME}' 
+    RELATIONNAME='phone_inc' 
+    OUTPUTSCHEMA (
+        pinc_id = 'pinc_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE,
+        description = 'description' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        ttime = 'ttime' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        taxid = 'taxid' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        inc_type = 'inc_type' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE,
+        specific_field3 = 'specific_field3' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE phone_inc I18N jp (
+        pinc_id:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'),
+        description:text (sourcetypeid = '12', sourcetypesize = '50'),
+        ttime:text (sourcetypeid = '12', sourcetypesize = '50'),
+        taxid:text (sourcetypeid = '12', sourcetypesize = '50'),
+        inc_type:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'),
+        specific_field3:text (sourcetypeid = '12', sourcetypesize = '50')
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD phone_inc(
+        I18N jp
+        CONSTRAINTS (
+             ADD pinc_id (any) OPT ANY
+             ADD description (any) OPT ANY
+             ADD ttime (any) OPT ANY
+             ADD taxid (any) OPT ANY
+             ADD inc_type (any) OPT ANY
+             ADD specific_field3 (any) OPT ANY
+        )
+        OUTPUTLIST (description, inc_type, pinc_id, specific_field3, taxid, ttime
+        )
+        WRAPPER (jdbc phone_inc)
+    );
+
