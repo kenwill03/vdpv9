@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW v2 AS SELECT (pinc_id||'suffix') AS iinc_id_suffix FROM phone_inc;
+

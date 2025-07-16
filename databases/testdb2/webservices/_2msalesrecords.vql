@@ -1,0 +1,33 @@
+﻿CREATE OR REPLACE REST WEBSERVICE _2msalesrecords
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
+    RESOURCES (
+        VIEW salesrecords FIELDS (
+            "Region" : 'text', 
+            "Country" : 'text', 
+            "Item Type" : 'text'('/Item Type'='ItemType'), 
+            "Sales Channel" : 'text'('/Sales Channel'='SalesChannel'), 
+            "Order Priority" : 'text'('/Order Priority'='OrderPriority'), 
+            "Order Date" : 'text'('/Order Date'='OrderDate'), 
+            "Order ID" : 'int'('/Order ID'='OrderID'), 
+            "Ship Date" : 'text'('/Ship Date'='ShipDate'), 
+            "Units Sold" : 'int'('/Units Sold'='UnitsSold'), 
+            "Unit Price" : 'float'('/Unit Price'='UnitPrice'), 
+            "Unit Cost" : 'float'('/Unit Cost'='UnitCost'), 
+            "Total Revenue" : 'float'('/Total Revenue'='TotalRevenue'), 
+            "Total Cost" : 'float'('/Total Cost'='TotalCost'), 
+            "Total Profit" : 'float'('/Total Profit'='TotalProfit')
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
+        PROCESS_FUNCTIONS_IN_SELECT_PARAMETER = true ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) ;
+
