@@ -1,0 +1,5 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+UNDEPLOY IF EXISTS WEBSERVICE ds_csv;
+
+DEPLOY WEBSERVICE ds_csv LOGIN = '${databases.testdb.webcontainer.webservices.ds_csv.LOGIN}' PASSWORD = '${databases.testdb.webcontainer.webservices.ds_csv.PASSWORD}' ${databases.testdb.webcontainer.webservices.ds_csv.PASSWORD.ENCRYPTED};
+

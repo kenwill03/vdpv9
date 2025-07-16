@@ -1,0 +1,4 @@
+﻿*/databases/testdb/datasources/jdbc/ds_sql_server.vql
+1/databases/testdb/views/phone_inc.vql
+*/databases/testdb2/views/phone_inc2.vql
+*/databases/testdb/views/phone_inc.vql

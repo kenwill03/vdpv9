@@ -1,0 +1,27 @@
+﻿CREATE OR REPLACE WRAPPER DF ds_csv
+    DATASOURCENAME=ds_csv
+    OUTPUTSCHEMA (
+        c1 = 'c1' (OPT),
+        c2 = 'c2' (OPT),
+        c3 = 'c3' (OPT)
+    );
+
+CREATE OR REPLACE TABLE ds_csv I18N jp (
+        c1:text,
+        c2:text,
+        c3:text
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_csv(
+        I18N jp
+        CONSTRAINTS (
+             ADD c1 (any) OPT ANY
+             ADD c2 (any) OPT ANY
+             ADD c3 (any) OPT ANY
+        )
+        OUTPUTLIST (c1, c2, c3
+        )
+        WRAPPER (df ds_csv)
+    );
+

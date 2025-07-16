@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_internet_inc AS SELECT internet_inc.iinc_id AS iinc_id, internet_inc.summary AS summary, internet_inc.ttime AS ttime, internet_inc.taxid AS taxid, internet_inc.specific_field1 AS specific_field1, internet_inc.specific_field2 AS specific_field2 FROM internet_inc;
+
+ALTER VIEW p_internet_inc
+ LAYOUT (internet_inc = [20, 20, 200, 200]);
+

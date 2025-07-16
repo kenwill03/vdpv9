@@ -1,0 +1,3 @@
+ALTER USER user2
+GRANT ADMIN ON testdb;
+

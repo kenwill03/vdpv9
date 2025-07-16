@@ -1,0 +1,25 @@
+﻿CREATE OR REPLACE REST WEBSERVICE ds_csv
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)    AUTHENTICATION (BASIC
+    USER 'admin'
+    PASSWORD '3iTAwvEXbSkc1VE0KdeNU8dkI1oahztvTXKU+d68tppIQglPpfUwafoXLpXEta+ry45Ce/uQqKbSc2dK1GEktNHXW0fCRjACi0HI9P2uY4+Bk1uXAJ2xx/+g7pwcxLU1' ENCRYPTED )
+
+    RESOURCES (
+        VIEW ds_csv FIELDS (
+            c1 : 'text', 
+            c2 : 'text', 
+            c3 : 'text'
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
+        PROCESS_FUNCTIONS_IN_SELECT_PARAMETER = true ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) ;
+
