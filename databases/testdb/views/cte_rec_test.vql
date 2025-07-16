@@ -1,0 +1,31 @@
+﻿CREATE OR REPLACE WRAPPER JDBC cte_rec_test
+    DATASOURCENAME=ds_sql_server
+    SQLSENTENCE='with cte_test(iinc_id,summary)
+as(
+  select iinc_id,summary from dbo.internet_inc
+  union all
+  select iinc_id,summary from cte_test
+  )
+select * from cte_test'   
+    OUTPUTSCHEMA (
+        iinc_id = 'iinc_id' :'java.lang.Integer' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE NOT UPDATEABLE,
+        summary = 'summary' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE cte_rec_test I18N jp (
+        iinc_id:int (sourcetypeid = '4', sourcetypedecimals = '0', sourcetypesize = '10'),
+        summary:text (sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '50')
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD cte_rec_test(
+        I18N jp
+        CONSTRAINTS (
+             ADD iinc_id NOS ZERO ()
+             ADD summary NOS ZERO ()
+        )
+        OUTPUTLIST (iinc_id, summary
+        )
+        WRAPPER (jdbc cte_rec_test)
+    );
+

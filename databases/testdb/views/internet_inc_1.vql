@@ -1,0 +1,41 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC internet_inc_1
+    DATASOURCENAME=ds_sql_server
+    CATALOGNAME='${databases.testdb.views.jdbc.internet_inc_1.CATALOGNAME}' 
+    SCHEMANAME='${databases.testdb.views.jdbc.internet_inc_1.SCHEMANAME}' 
+    RELATIONNAME='internet_inc' 
+    OUTPUTSCHEMA (
+        iinc_id = 'iinc_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE,
+        summary = 'summary' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        ttime = 'ttime' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        taxid = 'taxid' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        specific_field1 = 'specific_field1' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        specific_field2 = 'specific_field2' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE internet_inc_1 I18N jp (
+        iinc_id:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'),
+        summary:text (sourcetypeid = '12', sourcetypesize = '50'),
+        ttime:text (sourcetypeid = '12', sourcetypesize = '50'),
+        taxid:text (sourcetypeid = '12', sourcetypesize = '50'),
+        specific_field1:text (sourcetypeid = '12', sourcetypesize = '50'),
+        specific_field2:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10')
+    )
+    DESCRIPTION = 'test'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD internet_inc_1(
+        I18N jp
+        CONSTRAINTS (
+             ADD iinc_id (any) OPT ANY
+             ADD summary (any) OPT ANY
+             ADD ttime (any) OPT ANY
+             ADD taxid (any) OPT ANY
+             ADD specific_field1 (any) OPT ANY
+             ADD specific_field2 (any) OPT ANY
+        )
+        OUTPUTLIST (iinc_id, specific_field1, specific_field2, summary, taxid, ttime
+        )
+        WRAPPER (jdbc internet_inc_1)
+    );
+
