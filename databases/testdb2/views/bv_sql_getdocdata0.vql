@@ -1,0 +1,35 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "GetDocData;0"
+    DATASOURCENAME=ds_sql_server_copy
+    CATALOGNAME='${databases.testdb2.views.jdbc.getdocdata;0.CATALOGNAME}' 
+    SCHEMANAME='${databases.testdb2.views.jdbc.getdocdata;0.SCHEMANAME}' 
+    SPECIFICNAME='' 
+    PROCEDURENAME='GetDocData;0' ESCAPE
+    OUTPUTSCHEMA (
+        "@user_identifier" = '@user_identifier' :'java.lang.String' (sourcetypesize='255', DEFAULTVALUE='222865', sourcetypeid='-9', sourcetypename='nvarchar')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=1,
+        document_id = 'document_id' :'java.lang.Short' (sourcetypedecimals='0', sourcetypesize='5', sourcetypeid='5', sourcetypename='smallint')  NOT NULL SORTABLE PARAMTYPE=3,
+        document_name = 'document_name' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='1000', sourcetypeid='-9', sourcetypename='nvarchar')  SORTABLE PARAMTYPE=3,
+        model_name = 'model_name' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='50', sourcetypeid='-9', sourcetypename='nvarchar')  SORTABLE PARAMTYPE=3
+    );
+
+CREATE OR REPLACE TABLE bv_sql_getdocdata0 I18N jp (
+        "@user_identifier":text (extern, notnull, sourcetypeid = '-9', sourcetypesize = '255'),
+        document_id:int (notnull, sourcetypeid = '5', sourcetypedecimals = '0', sourcetypesize = '5'),
+        document_name:text (sourcetypeid = '-9', sourcetypedecimals = '0', sourcetypesize = '1000'),
+        model_name:text (sourcetypeid = '-9', sourcetypedecimals = '0', sourcetypesize = '50')
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "GetDocData;0"(
+        I18N jp
+        CONSTRAINTS (
+             ADD document_id (any) OPT ANY
+             ADD document_name (any) OPT ANY
+             ADD model_name (any) OPT ANY
+             ADD "@user_identifier" (=,is null) OBL ONE
+        )
+        OUTPUTLIST ("@user_identifier", document_id, document_name, model_name
+        )
+        WRAPPER (jdbc "GetDocData;0")
+    );
+

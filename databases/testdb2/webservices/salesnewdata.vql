@@ -1,0 +1,34 @@
+﻿CREATE OR REPLACE REST WEBSERVICE salesnewdata
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
+    RESOURCES (
+        VIEW salesnewdata FIELDS (
+            "Region" : 'text', 
+            "Country" : 'text', 
+            "Item_Type" : 'text', 
+            "Sales_Channel" : 'text', 
+            "Order_Priority" : 'text', 
+            "Order_Date" : 'localdate', 
+            "Order_ID" : 'int', 
+            "Ship_Date" : 'localdate', 
+            "Units_Sold" : 'int', 
+            "Unit_Price" : 'double', 
+            "Unit_Cost" : 'double', 
+            "Total_Revenue" : 'double', 
+            "Total_Cost" : 'double', 
+            "Total_Profit" : 'double', 
+            no : 'int'
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
+        PROCESS_FUNCTIONS_IN_SELECT_PARAMETER = true ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) ;
+

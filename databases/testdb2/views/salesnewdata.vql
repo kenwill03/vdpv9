@@ -1,0 +1,72 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC salesnewdata
+    DATASOURCENAME=ds_sql_server_copy
+    CATALOGNAME='${databases.testdb2.views.jdbc.salesnewdata.CATALOGNAME}' 
+    SCHEMANAME='${databases.testdb2.views.jdbc.salesnewdata.SCHEMANAME}' 
+    RELATIONNAME='salesnewdata' 
+    OUTPUTSCHEMA (
+        "Region" = 'Region' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='-9', sourcetypename='nvarchar')  NOT NULL SORTABLE,
+        "Country" = 'Country' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='-9', sourcetypename='nvarchar')  NOT NULL SORTABLE,
+        "Item_Type" = 'Item_Type' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='-9', sourcetypename='nvarchar')  NOT NULL SORTABLE,
+        "Sales_Channel" = 'Sales_Channel' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='-9', sourcetypename='nvarchar')  NOT NULL SORTABLE,
+        "Order_Priority" = 'Order_Priority' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='-9', sourcetypename='nvarchar')  NOT NULL SORTABLE,
+        "Order_Date" = 'Order_Date' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='date')  NOT NULL SORTABLE,
+        "Order_ID" = 'Order_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        "Ship_Date" = 'Ship_Date' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='date')  NOT NULL SORTABLE,
+        "Units_Sold" = 'Units_Sold' :'java.lang.Short' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='5', sourcetypeid='5', sourcetypename='smallint')  NOT NULL SORTABLE,
+        "Unit_Price" = 'Unit_Price' :'java.lang.Double' (OPT) (sourcetyperadix='2', sourcetypesize='53', sourcetypeid='8', sourcetypename='float')  NOT NULL SORTABLE,
+        "Unit_Cost" = 'Unit_Cost' :'java.lang.Double' (OPT) (sourcetyperadix='2', sourcetypesize='53', sourcetypeid='8', sourcetypename='float')  NOT NULL SORTABLE,
+        "Total_Revenue" = 'Total_Revenue' :'java.lang.Double' (OPT) (sourcetyperadix='2', sourcetypesize='53', sourcetypeid='8', sourcetypename='float')  NOT NULL SORTABLE,
+        "Total_Cost" = 'Total_Cost' :'java.lang.Double' (OPT) (sourcetyperadix='2', sourcetypesize='53', sourcetypeid='8', sourcetypename='float')  NOT NULL SORTABLE,
+        "Total_Profit" = 'Total_Profit' :'java.lang.Double' (OPT) (sourcetyperadix='2', sourcetypesize='53', sourcetypeid='8', sourcetypename='float')  NOT NULL SORTABLE,
+        no = 'no' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  ESCAPE NOT NULL SORTABLE
+    )
+    CONSTRAINT 'PK_salesnewdata' PRIMARY KEY ( 'no' )
+    INDEX 'PK_salesnewdata' CLUSTER UNIQUE PRIMARY ( 'no' );
+
+CREATE OR REPLACE TABLE salesnewdata I18N jp (
+        "Region":text (notnull, sourcetypeid = '-9', sourcetypesize = '50'),
+        "Country":text (notnull, sourcetypeid = '-9', sourcetypesize = '50'),
+        "Item_Type":text (notnull, sourcetypeid = '-9', sourcetypesize = '50'),
+        "Sales_Channel":text (notnull, sourcetypeid = '-9', sourcetypesize = '50'),
+        "Order_Priority":text (notnull, sourcetypeid = '-9', sourcetypesize = '50'),
+        "Order_Date":localdate (notnull, sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10'),
+        "Order_ID":int (notnull, sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'),
+        "Ship_Date":localdate (notnull, sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10'),
+        "Units_Sold":int (notnull, sourcetypeid = '5', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '5'),
+        "Unit_Price":double (notnull, sourcetypeid = '8', sourcetyperadix = '2', sourcetypesize = '53'),
+        "Unit_Cost":double (notnull, sourcetypeid = '8', sourcetyperadix = '2', sourcetypesize = '53'),
+        "Total_Revenue":double (notnull, sourcetypeid = '8', sourcetyperadix = '2', sourcetypesize = '53'),
+        "Total_Cost":double (notnull, sourcetypeid = '8', sourcetyperadix = '2', sourcetypesize = '53'),
+        "Total_Profit":double (notnull, sourcetypeid = '8', sourcetyperadix = '2', sourcetypesize = '53'),
+        no:int (notnull, sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10')
+    )
+    CONSTRAINT 'PK_salesnewdata' PRIMARY KEY ( 'no' )
+    CACHE FULL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE NOEXPIRE
+    ADD SEARCHMETHOD salesnewdata(
+        I18N jp
+        CONSTRAINTS (
+             ADD "Region" (any) OPT ANY
+             ADD "Country" (any) OPT ANY
+             ADD "Item_Type" (any) OPT ANY
+             ADD "Sales_Channel" (any) OPT ANY
+             ADD "Order_Priority" (any) OPT ANY
+             ADD "Order_Date" (any) OPT ANY
+             ADD "Order_ID" (any) OPT ANY
+             ADD "Ship_Date" (any) OPT ANY
+             ADD "Units_Sold" (any) OPT ANY
+             ADD "Unit_Price" (any) OPT ANY
+             ADD "Unit_Cost" (any) OPT ANY
+             ADD "Total_Revenue" (any) OPT ANY
+             ADD "Total_Cost" (any) OPT ANY
+             ADD "Total_Profit" (any) OPT ANY
+             ADD no (any) OPT ANY
+        )
+        OUTPUTLIST ("Country", "Item_Type", "Order_Date", "Order_ID", "Order_Priority", "Region", "Sales_Channel", "Ship_Date", "Total_Cost", "Total_Profit", "Total_Revenue", "Unit_Cost", "Unit_Price", "Units_Sold", no
+        )
+        WRAPPER (jdbc salesnewdata)
+    )
+    DECLARE CACHE INDEX "PK_salesnewdata" UNIQUE  ON (no);
+

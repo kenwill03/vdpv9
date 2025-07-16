@@ -1,0 +1,66 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "2msalesrecords"
+    DATASOURCENAME=ds_sql_server_copy
+    CATALOGNAME='${databases.testdb2.views.jdbc.2msalesrecords.CATALOGNAME}' 
+    SCHEMANAME='${databases.testdb2.views.jdbc.2msalesrecords.SCHEMANAME}' 
+    RELATIONNAME='2msalesrecords' ESCAPE
+    OUTPUTSCHEMA (
+        "Region" = 'Region' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        "Country" = 'Country' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        "Item Type" = 'Item Type' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  ESCAPE SORTABLE,
+        "Sales Channel" = 'Sales Channel' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  ESCAPE SORTABLE,
+        "Order Priority" = 'Order Priority' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  ESCAPE SORTABLE,
+        "Order Date" = 'Order Date' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  ESCAPE SORTABLE,
+        "Order ID" = 'Order ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  ESCAPE SORTABLE,
+        "Ship Date" = 'Ship Date' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  ESCAPE SORTABLE,
+        "Units Sold" = 'Units Sold' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  ESCAPE SORTABLE,
+        "Unit Price" = 'Unit Price' :'java.lang.Float' (OPT) (sourcetyperadix='2', sourcetypesize='24', sourcetypeid='7', sourcetypename='real')  ESCAPE SORTABLE,
+        "Unit Cost" = 'Unit Cost' :'java.lang.Float' (OPT) (sourcetyperadix='2', sourcetypesize='24', sourcetypeid='7', sourcetypename='real')  ESCAPE SORTABLE,
+        "Total Revenue" = 'Total Revenue' :'java.lang.Float' (OPT) (sourcetyperadix='2', sourcetypesize='24', sourcetypeid='7', sourcetypename='real')  ESCAPE SORTABLE,
+        "Total Cost" = 'Total Cost' :'java.lang.Float' (OPT) (sourcetyperadix='2', sourcetypesize='24', sourcetypeid='7', sourcetypename='real')  ESCAPE SORTABLE,
+        "Total Profit" = 'Total Profit' :'java.lang.Float' (OPT) (sourcetyperadix='2', sourcetypesize='24', sourcetypeid='7', sourcetypename='real')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE salesrecords I18N jp (
+        "Region":text (sourcetypeid = '12', sourcetypesize = '50'),
+        "Country":text (sourcetypeid = '12', sourcetypesize = '50'),
+        "Item Type":text (sourcetypeid = '12', sourcetypesize = '50'),
+        "Sales Channel":text (sourcetypeid = '12', sourcetypesize = '50'),
+        "Order Priority":text (sourcetypeid = '12', sourcetypesize = '50'),
+        "Order Date":text (sourcetypeid = '12', sourcetypesize = '50'),
+        "Order ID":int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'),
+        "Ship Date":text (sourcetypeid = '12', sourcetypesize = '50'),
+        "Units Sold":int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'),
+        "Unit Price":float (sourcetypeid = '7', sourcetyperadix = '2', sourcetypesize = '24'),
+        "Unit Cost":float (sourcetypeid = '7', sourcetyperadix = '2', sourcetypesize = '24'),
+        "Total Revenue":float (sourcetypeid = '7', sourcetyperadix = '2', sourcetypesize = '24'),
+        "Total Cost":float (sourcetypeid = '7', sourcetyperadix = '2', sourcetypesize = '24'),
+        "Total Profit":float (sourcetypeid = '7', sourcetyperadix = '2', sourcetypesize = '24')
+    )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "2msalesrecords"(
+        I18N jp
+        CONSTRAINTS (
+             ADD "Region" (any) OPT ANY
+             ADD "Country" (any) OPT ANY
+             ADD "Item Type" (any) OPT ANY
+             ADD "Sales Channel" (any) OPT ANY
+             ADD "Order Priority" (any) OPT ANY
+             ADD "Order Date" (any) OPT ANY
+             ADD "Order ID" (any) OPT ANY
+             ADD "Ship Date" (any) OPT ANY
+             ADD "Units Sold" (any) OPT ANY
+             ADD "Unit Price" (any) OPT ANY
+             ADD "Unit Cost" (any) OPT ANY
+             ADD "Total Revenue" (any) OPT ANY
+             ADD "Total Cost" (any) OPT ANY
+             ADD "Total Profit" (any) OPT ANY
+        )
+        OUTPUTLIST ("Country", "Item Type", "Order Date", "Order ID", "Order Priority", "Region", "Sales Channel", "Ship Date", "Total Cost", "Total Profit", "Total Revenue", "Unit Cost", "Unit Price", "Units Sold"
+        )
+        WRAPPER (jdbc "2msalesrecords")
+    )
+    DECLARE CACHE INDEX index_order ON ("Order ID");
+

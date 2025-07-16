@@ -1,0 +1,5 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+UNDEPLOY IF EXISTS WEBSERVICE phone_inc;
+
+DEPLOY WEBSERVICE phone_inc LOGIN = '${databases.testdb2.webcontainer.webservices.phone_inc.LOGIN}' PASSWORD = '${databases.testdb2.webcontainer.webservices.phone_inc.PASSWORD}' ${databases.testdb2.webcontainer.webservices.phone_inc.PASSWORD.ENCRYPTED};
+
