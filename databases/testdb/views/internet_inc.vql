@@ -21,7 +21,7 @@ CREATE OR REPLACE TABLE internet_inc I18N jp (
         specific_field1:text (sourcetypeid = '12', sourcetypesize = '50'),
         specific_field2:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10')
     )
-    DESCRIPTION = 'test'
+    DESCRIPTION = 'test test'
     CACHE FULL
     BATCHSIZEINCACHE DEFAULT
     TIMETOLIVEINCACHE DEFAULT
